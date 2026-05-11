@@ -1,0 +1,27 @@
+package org.example.volunteerplatform.config;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+@Configuration
+public class WebMvcConfig implements WebMvcConfigurer {
+
+    @Value("${app.upload.dir:uploads/events}")
+    private String uploadDir;
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        // Resolve the absolute path of the upload directory
+        Path uploadPath = Paths.get(uploadDir).toAbsolutePath().normalize();
+        // Serve /uploads/** from the parent of the upload directory
+        // e.g. uploads/events → serve /uploads/** from <abs>/uploads/
+        Path serveFrom = uploadPath.getParent() != null ? uploadPath.getParent() : uploadPath;
+        registry.addResourceHandler("/uploads/**")
+                .addResourceLocations("file:" + serveFrom.toString().replace("\\", "/") + "/");
+    }
+}

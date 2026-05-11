@@ -10,10 +10,11 @@ public class UserProfileDto {
     private String lastName;
     private String email;
     private Role role;
+    private double averageRating;
+    private int ratingCount;
     private List<EventSummaryDto> createdEvents;
     private List<EventSummaryDto> participatingEvents;
 
-    // Inner DTO for event summary
     public static class EventSummaryDto {
         private Long id;
         private String title;
@@ -23,14 +24,12 @@ public class UserProfileDto {
             this.title = title;
         }
 
-        // Getters and Setters
         public Long getId() { return id; }
         public void setId(Long id) { this.id = id; }
         public String getTitle() { return title; }
         public void setTitle(String title) { this.title = title; }
     }
 
-    // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public String getFirstName() { return firstName; }
@@ -41,6 +40,10 @@ public class UserProfileDto {
     public void setEmail(String email) { this.email = email; }
     public Role getRole() { return role; }
     public void setRole(Role role) { this.role = role; }
+    public double getAverageRating() { return averageRating; }
+    public void setAverageRating(double averageRating) { this.averageRating = averageRating; }
+    public int getRatingCount() { return ratingCount; }
+    public void setRatingCount(int ratingCount) { this.ratingCount = ratingCount; }
     public List<EventSummaryDto> getCreatedEvents() { return createdEvents; }
     public void setCreatedEvents(List<EventSummaryDto> createdEvents) { this.createdEvents = createdEvents; }
     public List<EventSummaryDto> getParticipatingEvents() { return participatingEvents; }

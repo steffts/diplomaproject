@@ -64,14 +64,14 @@ public class UserService {
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
     }
 
-    private UserDto convertToUserDto(User user) {
+    public UserDto convertToUserDto(User user) {
         UserDto dto = new UserDto();
         dto.setId(user.getId());
         dto.setFirstName(user.getFirstName());
         dto.setLastName(user.getLastName());
         dto.setEmail(user.getEmail());
         dto.setRole(user.getRole());
-        // We should probably add status to UserDto as well
+        dto.setStatus(user.getStatus());
         return dto;
     }
 
@@ -82,6 +82,8 @@ public class UserService {
         dto.setLastName(user.getLastName());
         dto.setEmail(user.getEmail());
         dto.setRole(user.getRole());
+        dto.setAverageRating(user.getAverageRating());
+        dto.setRatingCount(user.getRatingCount());
 
         dto.setCreatedEvents(createdEvents.stream()
                 .map(event -> new UserProfileDto.EventSummaryDto(event.getId(), event.getTitle()))

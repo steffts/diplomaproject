@@ -1,9 +1,13 @@
 package org.example.volunteerplatform.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -13,9 +17,11 @@ import java.util.Set;
 
 @Entity
 @Table(name = "events")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
-@AllArgsConstructor
+@EqualsAndHashCode(of = "id")
+@ToString(exclude = {"participants", "feedbacks", "owner"})
 public class Event {
 
     @Id
@@ -34,8 +40,8 @@ public class Event {
     @Column(nullable = false)
     private LocalDateTime eventDate;
 
-    @Column(nullable = false)
-    private Integer participantLimit = 0;
+    @Column(nullable = true)
+    private Integer participantLimit;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -58,4 +64,10 @@ public class Event {
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Feedback> feedbacks = new ArrayList<>();
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 }

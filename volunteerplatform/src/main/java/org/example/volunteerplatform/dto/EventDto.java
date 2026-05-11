@@ -2,10 +2,11 @@ package org.example.volunteerplatform.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.example.volunteerplatform.entity.EventCategory;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
-@JsonInclude(JsonInclude.Include.NON_NULL) // This will hide null fields (like participants) in the JSON response
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class EventDto {
 
     private Long id;
@@ -15,15 +16,18 @@ public class EventDto {
     private LocalDateTime eventDate;
     private UserSummaryDto owner;
     private int participantCount;
-    private int participantLimit;
+    private Integer participantLimit;
     private EventCategory category;
     private String imageUrl;
-    private List<UserSummaryDto> participants; // New field
+    private List<UserSummaryDto> participants;
+    private Boolean isParticipant;
 
     public static class UserSummaryDto {
         private Long id;
         private String firstName;
         private String lastName;
+        private Double averageRating;
+        private Integer ratingCount;
 
         public UserSummaryDto() {}
 
@@ -33,15 +37,26 @@ public class EventDto {
             this.lastName = lastName;
         }
 
+        public UserSummaryDto(Long id, String firstName, String lastName, Double averageRating, Integer ratingCount) {
+            this.id = id;
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.averageRating = averageRating;
+            this.ratingCount = ratingCount;
+        }
+
         public Long getId() { return id; }
         public void setId(Long id) { this.id = id; }
         public String getFirstName() { return firstName; }
         public void setFirstName(String firstName) { this.firstName = firstName; }
         public String getLastName() { return lastName; }
         public void setLastName(String lastName) { this.lastName = lastName; }
+        public Double getAverageRating() { return averageRating; }
+        public void setAverageRating(Double averageRating) { this.averageRating = averageRating; }
+        public Integer getRatingCount() { return ratingCount; }
+        public void setRatingCount(Integer ratingCount) { this.ratingCount = ratingCount; }
     }
 
-    // Getters and Setters for all fields
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public String getTitle() { return title; }
@@ -56,12 +71,14 @@ public class EventDto {
     public void setOwner(UserSummaryDto owner) { this.owner = owner; }
     public int getParticipantCount() { return participantCount; }
     public void setParticipantCount(int participantCount) { this.participantCount = participantCount; }
-    public int getParticipantLimit() { return participantLimit; }
-    public void setParticipantLimit(int participantLimit) { this.participantLimit = participantLimit; }
+    public Integer getParticipantLimit() { return participantLimit; }
+    public void setParticipantLimit(Integer participantLimit) { this.participantLimit = participantLimit; }
     public EventCategory getCategory() { return category; }
     public void setCategory(EventCategory category) { this.category = category; }
     public String getImageUrl() { return imageUrl; }
     public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
     public List<UserSummaryDto> getParticipants() { return participants; }
     public void setParticipants(List<UserSummaryDto> participants) { this.participants = participants; }
+    public Boolean getIsParticipant() { return isParticipant; }
+    public void setIsParticipant(Boolean isParticipant) { this.isParticipant = isParticipant; }
 }

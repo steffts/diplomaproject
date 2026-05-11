@@ -2,7 +2,6 @@ package org.example.volunteerplatform.dto;
 
 import org.example.volunteerplatform.entity.EventCategory;
 import jakarta.validation.constraints.*;
-import org.hibernate.validator.constraints.URL;
 import java.time.LocalDateTime;
 
 public class CreateEventRequest {
@@ -20,18 +19,15 @@ public class CreateEventRequest {
     @Future
     private LocalDateTime eventDate;
 
-    @NotNull
-    @Min(0)
+    @Positive
     private Integer participantLimit;
 
     @NotNull
     private EventCategory category;
 
-    @URL(message = "Must be a valid URL")
     @Size(max = 2048)
     private String imageUrl;
 
-    // Getters and Setters
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
     public String getDescription() { return description; }

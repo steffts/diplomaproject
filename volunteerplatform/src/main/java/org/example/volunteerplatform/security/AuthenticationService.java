@@ -1,6 +1,7 @@
 package org.example.volunteerplatform.security;
 
 import org.example.volunteerplatform.dto.LoginRequest;
+import org.example.volunteerplatform.dto.RegisterRequest;
 import org.example.volunteerplatform.entity.Role;
 import org.example.volunteerplatform.entity.User;
 import org.example.volunteerplatform.entity.UserStatus;
@@ -22,28 +23,26 @@ public class AuthenticationService {
 
     public AuthenticationService(UserRepository userRepository,
                                  PasswordEncoder passwordEncoder,
-                                 JwtService jwtService, AuthenticationManager authenticationManager) {
+                                 JwtService jwtService,
+                                 AuthenticationManager authenticationManager) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
     }
 
-    public String register(User user) {
-        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
-            throw new IllegalStateException("A user with this email already exists: " + user.getEmail());
+    public String register(RegisterRequest request) {
+        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
+            throw new IllegalStateException("A user with this email already exists: " + request.getEmail());
         }
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        // ВРЕМЕННИ ПРОМЕНИ ЗА СЪЗДАВАНЕ НА АДМИН
-        /*user.setRole(Role.ADMIN);
-        user.setStatus(UserStatus.ACTIVE);
-        userRepository.save(user);
-        // ВРЕМЕННО ВРЪЩАМЕ ТОКЕН, ЗА ДА СЕ ЛОГНЕ ВЕДНАГА
-        return jwtService.generateToken(user);*/
-
-        user.setRole(Role.USER); // All new users are standard users
-        user.setStatus(UserStatus.PENDING); // All new users must be approved
+        User user = new User();
+        user.setEmail(request.getEmail());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setFirstName(request.getFirstName());
+        user.setLastName(request.getLastName());
+        user.setRole(Role.USER);
+        user.setStatus(UserStatus.PENDING);
 
         userRepository.save(user);
         return "User registered successfully. Awaiting admin approval.";

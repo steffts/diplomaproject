@@ -13,7 +13,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/events")
-@CrossOrigin(origins = "http://localhost:3000")
 public class EventController {
 
     private final EventService eventService;
@@ -52,15 +51,13 @@ public class EventController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/{id}/register")
-    public ResponseEntity<Void> addParticipant(@PathVariable Long id) {
-        eventService.addParticipant(id);
-        return ResponseEntity.noContent().build();
+    @PostMapping("/{eventId}/participate")
+    public ResponseEntity<EventDto> joinEvent(@PathVariable Long eventId) {
+        return ResponseEntity.ok(eventService.joinEvent(eventId));
     }
 
-    @DeleteMapping("/{id}/register")
-    public ResponseEntity<Void> removeParticipant(@PathVariable Long id) {
-        eventService.removeParticipant(id);
-        return ResponseEntity.noContent().build();
+    @DeleteMapping("/{eventId}/participate")
+    public ResponseEntity<EventDto> leaveEvent(@PathVariable Long eventId) {
+        return ResponseEntity.ok(eventService.leaveEvent(eventId));
     }
 }
