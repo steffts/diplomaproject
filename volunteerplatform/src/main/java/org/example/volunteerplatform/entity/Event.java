@@ -21,7 +21,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
-@ToString(exclude = {"participants", "feedbacks", "owner"})
+@ToString(exclude = {"participants", "feedbacks", "chatMessages", "owner"})
 public class Event {
 
     @Id
@@ -64,6 +64,9 @@ public class Event {
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Feedback> feedbacks = new ArrayList<>();
+
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ChatMessage> chatMessages = new ArrayList<>();
 
     @CreationTimestamp
     private LocalDateTime createdAt;

@@ -6,26 +6,30 @@ import java.time.LocalDateTime;
 
 public class UpdateEventRequest {
 
-    @NotBlank
+    @NotBlank(message = "Title is required")
+    @Size(max = 255, message = "Title must be at most 255 characters")
     private String title;
 
-    @NotBlank
+    @NotBlank(message = "Description is required")
+    @Size(max = 1000, message = "Description must be at most 1000 characters")
     private String description;
 
-    @NotBlank
+    @NotBlank(message = "Location is required")
+    @Size(max = 255, message = "Location must be at most 255 characters")
     private String location;
 
-    @NotNull
-    @Future
+    @NotNull(message = "Event date is required")
+    @Future(message = "Event date must be in the future")
     private LocalDateTime eventDate;
 
-    @Positive
+    @Min(value = 1, message = "Participant limit must be at least 1 (leave empty for unlimited)")
+    @Max(value = 100000, message = "Participant limit must be at most 100000")
     private Integer participantLimit;
 
-    @NotNull
+    @NotNull(message = "Category is required")
     private EventCategory category;
 
-    @Size(max = 2048)
+    @Size(max = 2048, message = "Image URL must be at most 2048 characters")
     private String imageUrl;
 
     public String getTitle() { return title; }

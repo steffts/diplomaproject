@@ -15,7 +15,6 @@ public class CreateFeedbackRequest {
     @Size(max = 1000)
     private String reviewText;
 
-    // Getters and Setters
     public int getRating() {
         return rating;
     }

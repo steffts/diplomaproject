@@ -16,10 +16,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        // Resolve the absolute path of the upload directory
         Path uploadPath = Paths.get(uploadDir).toAbsolutePath().normalize();
-        // Serve /uploads/** from the parent of the upload directory
-        // e.g. uploads/events → serve /uploads/** from <abs>/uploads/
         Path serveFrom = uploadPath.getParent() != null ? uploadPath.getParent() : uploadPath;
         registry.addResourceHandler("/uploads/**")
                 .addResourceLocations("file:" + serveFrom.toString().replace("\\", "/") + "/");
