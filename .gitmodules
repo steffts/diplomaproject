@@ -1,0 +1,3 @@
+[submodule "volunteer-platform-ui"]
+	path = volunteer-platform-ui
+	url = https://github.com/steffts/volunteer-platform-ui.git
